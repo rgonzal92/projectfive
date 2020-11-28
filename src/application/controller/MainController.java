@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.model.Config;
 import application.model.YTDL;
 import com.sapher.youtubedl.YoutubeDLException;
 import javafx.event.ActionEvent;
@@ -13,13 +14,13 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MainController {
-    YTDL object = YTDL.getInstance();
+    private final YTDL youtube_dl = YTDL.getInstance();
 
     @FXML
     private void download() throws YoutubeDLException {
         String videoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-        object.setExecPath();
-        object.getRequest(videoUrl);
+        youtube_dl.setExecPath();
+        youtube_dl.getRequest(videoUrl);
     }
 
     @FXML
@@ -33,9 +34,6 @@ public class MainController {
     @FXML
     private void switchToAdvancedScene(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-
-        AdvancedController controller = loader.getController();
-        controller.initialize(object);
 
         String scene = "../view/advanced.fxml";
         loadScene(actionEvent, loader, scene);

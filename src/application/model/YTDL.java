@@ -5,10 +5,8 @@ import com.sapher.youtubedl.YoutubeDLException;
 import com.sapher.youtubedl.YoutubeDLRequest;
 import com.sapher.youtubedl.YoutubeDLResponse;
 
-import java.util.HashMap;
-
 public class YTDL {
-    private static YTDL instance = null;
+    private static YTDL instance;
     private String outputDirectory;
 
     public YTDL() {
@@ -28,18 +26,6 @@ public class YTDL {
     public void getRequest(String videoLink) throws YoutubeDLException {
         YoutubeDLRequest request = new YoutubeDLRequest(videoLink, this.getOutputDirectory());
 
-        HashMap<String, String> sample = new HashMap<>();
-        sample.put("ignore-errors", null);
-        sample.put("output", "%(id)s");
-        sample.put("retries", "10");
-
-        for (String key : sample.keySet()) {
-            request.setOption(key, sample.get(key));
-        }
-
-//        request.setOption("ignore-errors", null);		// --ignore-errors
-//        request.setOption("output", "%(id)s");	// --output "%(id)s"
-//        request.setOption("retries", 10);		// --retries 10
         System.out.println(getResponse(request));
     }
 
