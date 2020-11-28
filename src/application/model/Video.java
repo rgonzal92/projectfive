@@ -1,4 +1,2 @@
-package application.model;
-
-public class Video {
+package application.model;public class Video {
 }
