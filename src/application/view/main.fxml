@@ -14,8 +14,8 @@
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Button>
-      <TextArea layoutX="50.0" layoutY="219.0" prefHeight="200.0" prefWidth="500.0" />
-      <Label layoutX="158.0" layoutY="167.0" text="Enter your link(s) below:">
+      <TextArea fx:id="urlLinksTextArea" layoutX="50.0" layoutY="163.0" prefHeight="114.0" prefWidth="500.0" />
+      <Label layoutX="159.0" layoutY="121.0" text="Enter your link(s) below:">
          <font>
             <Font size="27.0" />
          </font>
@@ -35,5 +35,6 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
+      <TextArea fx:id="outputTextArea" layoutX="51.0" layoutY="283.0" prefHeight="137.0" prefWidth="500.0" />
    </children>
 </AnchorPane>
