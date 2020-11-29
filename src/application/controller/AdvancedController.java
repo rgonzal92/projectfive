@@ -27,11 +27,11 @@ public class AdvancedController implements Initializable {
 
     private void getTexts() {
         videoFormatDropDown.getItems().addAll("3gp", "flv", "webm", "mp4");
-        videoFormatDropDown.setPromptText(config.getVideoFormat());
+        videoFormatDropDown.setValue(config.getVideoFormat());
         audioFormatDropDown.getItems().addAll("mp3", "wav", "acc", "m4a", "flac");
-        audioFormatDropDown.setPromptText(config.getAudioFormat());
+        audioFormatDropDown.setValue(config.getAudioFormat());
         videoResolutionDropDown.getItems().addAll("480", "720", "1080", "1440", "2160p");
-        videoResolutionDropDown.setPromptText(config.getVideoResolution());
+        videoResolutionDropDown.setValue(config.getVideoResolution());
     }
 
     @FXML
@@ -64,5 +64,6 @@ public class AdvancedController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         getTexts();
+
     }
 }

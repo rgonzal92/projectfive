@@ -23,10 +23,9 @@ public class YTDL {
         YoutubeDL.setExecutablePath("lib/youtube-dl.exe");
     }
 
-    public void getRequest(String videoLink) throws YoutubeDLException {
-        YoutubeDLRequest request = new YoutubeDLRequest(videoLink, this.getOutputDirectory());
-
-        System.out.println(getResponse(request));
+    public String getRequest(String videoLink) throws YoutubeDLException {
+        YoutubeDLRequest request = new YoutubeDLRequest(videoLink, getOutputDirectory());
+        return getResponse(request);
     }
 
     public String getResponse(YoutubeDLRequest request) throws YoutubeDLException {

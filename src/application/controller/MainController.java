@@ -1,6 +1,5 @@
 package application.controller;
 
-import application.model.Config;
 import application.model.YTDL;
 import com.sapher.youtubedl.YoutubeDLException;
 import javafx.event.ActionEvent;
@@ -9,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,10 +17,17 @@ public class MainController {
     private final YTDL youtube_dl = YTDL.getInstance();
 
     @FXML
+    private TextArea urlLinksTextArea;
+    @FXML
+    private TextArea outputTextArea;
+
+    @FXML
     private void download() throws YoutubeDLException {
-        String videoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+        outputTextArea.clear();
         youtube_dl.setExecPath();
-        youtube_dl.getRequest(videoUrl);
+        for (String link : urlLinksTextArea.getText().split("\\n")) {
+            outputTextArea.appendText(youtube_dl.getRequest(link).replaceAll("\\r", "\n"));
+        }
     }
 
     @FXML

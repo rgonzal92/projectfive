@@ -9,17 +9,20 @@ public class Config {
     private String videoFormat;
     private String audioFormat;
     private String videoResolution;
+    private String fileOutput;
 
     public Config() {
         this.setVideoFormat("mp4");
         this.setAudioFormat("m4a");
         this.setVideoResolution("1080");
+        this.setFileOutput("%(title)s");
     }
 
     public void writeConfig() throws IOException {
         FileWriter fileWriter = new FileWriter(getConfigPath());
         PrintWriter printWriter = new PrintWriter(fileWriter);
-        printWriter.printf("-f \"bestvideo[height<=%s][ext=%s]+bestaudio[ext=%s]\"", getVideoResolution(), getVideoFormat(), getAudioFormat());
+        printWriter.printf("-f \"bestvideo[height<=%s][ext=%s]+bestaudio[ext=%s]\"%n", getVideoResolution(), getVideoFormat(), getAudioFormat());
+        printWriter.printf("-o ~/Downloads/youtube-dl/%s", getFileOutput());
         printWriter.close();
     }
 
@@ -59,5 +62,13 @@ public class Config {
 
     public void setVideoResolution(String videoResolution) {
         this.videoResolution = videoResolution;
+    }
+
+    public String getFileOutput() {
+        return fileOutput;
+    }
+
+    public void setFileOutput(String fileOutput) {
+        this.fileOutput = fileOutput;
     }
 }
