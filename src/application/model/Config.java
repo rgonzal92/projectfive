@@ -20,6 +20,7 @@ public class Config {
         this.setVideoFormat("mp4");
         this.setAudioFormat("m4a");
         this.setVideoResolution("1080");
+        this.setFileOutput("%(title)s");
     }
 
     public void writeConfig() throws IOException {
@@ -49,12 +50,13 @@ public class Config {
     }
 
     public void loadConfig(String filePath) throws IOException {
-
+        
     }
 
     private String getConfigPath() {
+        //return System.getProperty("user.home") + "\\youtube-dl.conf";
         //System.err.println(System.getProperty("user.home") + "\\youtube-dl.conf");
-    //return System.getProperty("user.home") + "\\youtube-dl.conf";
+        //return System.getProperty("user.home") + "\\youtube-dl.conf";
         System.err.println(System.getProperty("user.dir")+"\\youtube-dl.conf");
         return System.getProperty("user.dir")+"\\youtube-dl.conf";
     }
@@ -111,5 +113,13 @@ public class Config {
 
     public void setVideoResolution(String videoResolution) {
         this.videoResolution = videoResolution;
+    }
+
+    public String getFileOutput() {
+        return fileOutput;
+}
+
+    public void setFileOutput(String fileOutput) {
+        this.fileOutput = fileOutput;
     }
 }
