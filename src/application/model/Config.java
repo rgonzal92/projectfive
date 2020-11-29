@@ -15,6 +15,7 @@ public class Config {
     private boolean writeinfoJsons;
     private boolean noOverWriting;
     private boolean acceptPlayLists;
+    private String fileOutput;
 
     public Config() {
         this.setVideoFormat("mp4");

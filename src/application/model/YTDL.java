@@ -1,5 +1,10 @@
 package application.model;
 
+import com.sapher.youtubedl.YoutubeDL;
+import com.sapher.youtubedl.YoutubeDLException;
+import com.sapher.youtubedl.YoutubeDLRequest;
+import com.sapher.youtubedl.YoutubeDLResponse;
+
 import com.sapher.youtubedl.*;
 import com.sapher.youtubedl.utils.*;
 
