@@ -10,8 +10,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,29 +24,30 @@ public class AdvancedController implements Initializable {
     private final Config config = Config.getInstance();
 
     @FXML
-    private ComboBox<String> videoFormatDropDown;
+    private AnchorPane anchorPane;
     @FXML
-    private ComboBox<String> audioFormatDropDown;
+    private ComboBox<String> videoFormatDropDown, audioFormatDropDown, videoResolutionDropDown;
     @FXML
-    private ComboBox<String> videoResolutionDropDown;
+    private CheckBox audioCheckBox, descriptionCheckBox, thumbnailsCheckBox, infoJsonCheckBox, overwritingCheckBox, playlistCheckBox;
     @FXML
-    CheckBox audio,description,thumbnails,infojson,overwriting,playlist;
+    private TextField directoryTextField;
 
-    public AdvancedController(){
-        audio=new CheckBox();
-        description=new CheckBox();
-        thumbnails=new CheckBox();
-        infojson=new CheckBox();
-        overwriting=new CheckBox();
-        playlist=new CheckBox();
-    }
-    private void getTexts() {
+    private void generateOptions() {
         videoFormatDropDown.getItems().addAll("3gp", "flv", "webm", "mp4");
         videoFormatDropDown.setValue(config.getVideoFormat());
-        audioFormatDropDown.getItems().addAll("mp3", "wav", "acc", "m4a", "flac");
+        audioFormatDropDown.getItems().addAll("Disabled", "mp3", "wav", "acc", "m4a", "flac");
         audioFormatDropDown.setValue(config.getAudioFormat());
-        videoResolutionDropDown.getItems().addAll("480", "720", "1080", "1440", "2160p");
+        videoResolutionDropDown.getItems().addAll("480", "720", "1080", "1440", "2160");
         videoResolutionDropDown.setValue(config.getVideoResolution());
+
+        if (config.isAudioOnly()) audioCheckBox.setSelected(true);
+        if (config.isWriteDescription()) descriptionCheckBox.setSelected(true);
+        if (config.isWriteThumbnails()) thumbnailsCheckBox.setSelected(true);
+        if (config.isWriteInfoJsons()) infoJsonCheckBox.setSelected(true);
+        if (config.isNoOverWriting()) overwritingCheckBox.setSelected(true);
+        if (config.isAcceptPlayLists()) playlistCheckBox.setSelected(true);
+
+        directoryTextField.setPromptText(config.getSaveDirectory());
     }
 
     @FXML
@@ -50,21 +55,35 @@ public class AdvancedController implements Initializable {
         config.setVideoFormat(videoFormatDropDown.getSelectionModel().getSelectedItem());
         config.setAudioFormat(audioFormatDropDown.getSelectionModel().getSelectedItem());
         config.setVideoResolution(videoResolutionDropDown.getSelectionModel().getSelectedItem());
-        config.setAudioOnly(audio.isSelected());
-        config.setWriteDescription(description.isSelected());
-        config.setWriteThumbnails(thumbnails.isSelected());
-        config.setWriteinfoJsons(thumbnails.isSelected());
-        config.setAcceptPlayLists(playlist.isSelected());
-        config.setNoOverWriting(overwriting.isSelected());
+        config.setAudioOnly(audioCheckBox.isSelected());
+        config.setWriteDescription(descriptionCheckBox.isSelected());
+        config.setWriteThumbnails(thumbnailsCheckBox.isSelected());
+        config.setWriteInfoJsons(thumbnailsCheckBox.isSelected());
+        config.setAcceptPlayLists(playlistCheckBox.isSelected());
+        config.setNoOverWriting(overwritingCheckBox.isSelected());
+        if (config.getSaveDirectory().isEmpty() && directoryTextField.getText().isEmpty())
+            config.setSaveDirectory(System.getProperty("user.home") + "\\Downloads");
+        else if (directoryTextField.getText().isEmpty())
+            config.setSaveDirectory(config.getSaveDirectory());
+        else
+            config.setSaveDirectory(directoryTextField.getText());
         config.writeConfig();
+    }
+
+    @FXML
+    private void browseDirectory() {
+        final DirectoryChooser directoryChooser = new DirectoryChooser();
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
+        File file = directoryChooser.showDialog(stage);
+        if (file != null)
+            directoryTextField.setText(file.getAbsolutePath());
     }
 
     @FXML
     private void switchToMainScene(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/main.fxml"));
         Parent root = loader.load();
-
-        Scene zoneScene = new Scene(root, 600, 500);
+        Scene zoneScene = new Scene(root, 700, 600);
         Stage primaryStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         primaryStage.setScene(zoneScene);
         primaryStage.show();
@@ -80,7 +99,6 @@ public class AdvancedController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        getTexts();
-
+        generateOptions();
     }
 }

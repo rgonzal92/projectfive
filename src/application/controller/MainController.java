@@ -1,45 +1,50 @@
 package application.controller;
 
 import application.model.Config;
-import java.util.*;
-import java.io.*;
-import java.lang.*;
-import java.math.*;
-import application.model.*;
-import com.sapher.youtubedl.*;
-import javafx.event.*;
-import javafx.fxml.*;
-import javafx.scene.*;
-import javafx.scene.control.*;
-import javafx.stage.*;
+import application.model.YTDL;
+import com.sapher.youtubedl.YoutubeDLException;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
+
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class MainController {
+public class MainController implements Initializable {
     private final YTDL youtube_dl = YTDL.getInstance();
+    private final Config config = Config.getInstance();
 
     @FXML
-    TextArea InputBox;
-    public MainController(){
-        InputBox=new TextArea();
-    }
+    private TextArea urlTextArea;
     @FXML
-    private void download(ActionEvent actionEvent) throws YoutubeDLException {
-        /*String videoUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
-        youtube_dl.setExecPath();
-        youtube_dl.getRequest(videoUrl);*/
-        Scanner LineScanner=new Scanner(InputBox.getText());
-        while(LineScanner.hasNextLine()){
-            String videoUrl =LineScanner.nextLine();
-            System.out.println(videoUrl);
-            youtube_dl.setExecPath();
-            youtube_dl.getRequest(videoUrl);
+    private TextArea outputTextArea;
+
+    @FXML
+    private void download() {
+        try {
+            if (urlTextArea.getText().isEmpty())
+                outputTextArea.setText("Must provide at least one link.");
+            else
+                for (String url : urlTextArea.getText().split("\n")) {
+                    outputTextArea.clear();
+                    outputTextArea.appendText(youtube_dl.getRequest(url, config.getSaveDirectory()).replaceAll("\\r", "\n"));
+                    System.out.println(url);
+                }
+        } catch (YoutubeDLException e) {
+            outputTextArea.setText(e.getMessage());
         }
     }
 
     @FXML
     private void switchToCreditsScene(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-
         String scene = "../view/credits.fxml";
         loadScene(actionEvent, loader, scene);
     }
@@ -47,7 +52,6 @@ public class MainController {
     @FXML
     private void switchToAdvancedScene(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader();
-
         String scene = "../view/advanced.fxml";
         loadScene(actionEvent, loader, scene);
     }
@@ -55,10 +59,27 @@ public class MainController {
     private void loadScene(ActionEvent actionEvent, FXMLLoader loader, String scene) throws IOException {
         loader.setLocation(getClass().getResource(scene));
         Parent root = loader.load();
-
-        Scene personnelScene = new Scene(root, 600, 500);
+        Scene personnelScene = new Scene(root, 700, 600);
         Stage primaryStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         primaryStage.setScene(personnelScene);
         primaryStage.show();
+    }
+
+    /**
+     * Called to initialize a controller after its root element has been
+     * completely processed.
+     *
+     * @param location  The location used to resolve relative paths for the root object, or
+     *                  <tt>null</tt> if the location is not known.
+     * @param resources The resources used to localize the root object, or <tt>null</tt> if
+     */
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        youtube_dl.setExecPath();
+        try {
+            config.loadConfig();
+        } catch (IOException ignored) {
+            ;
+        }
     }
 }

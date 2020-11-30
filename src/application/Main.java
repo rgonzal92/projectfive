@@ -12,7 +12,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("view/main.fxml"));
         primaryStage.setTitle("YouTube Downloader GUI");
-        primaryStage.setScene(new Scene(root, 600, 500));
+        primaryStage.setResizable(false);
+        primaryStage.setScene(new Scene(root, 700, 600));
         primaryStage.show();
     }
 

@@ -7,44 +7,44 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.CreditsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" style="-fx-background-color: #696969;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.CreditsController">
     <children>
-        <Button layoutX="270.0" layoutY="437.0" mnemonicParsing="false" onAction="#switchToMainScene" style="-fx-background-color: black;" text="Home" textFill="WHITE">
+        <Button layoutX="320.0" layoutY="556.0" mnemonicParsing="false" onAction="#switchToMainScene" style="-fx-background-color: black;" text="Home" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="14.0" />
             </font>
         </Button>
-        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="250.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../images/logo.png" />
             </image>
         </ImageView>
-      <Label layoutX="186.0" layoutY="134.0" text="The Object Five Team">
+      <Label layoutX="231.0" layoutY="250.0" text="The Object Five Team" textFill="#ffb200">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label layoutX="216.0" layoutY="185.0" text="Jacob De Hoyos">
+      <Label layoutX="261.0" layoutY="301.0" text="Jacob De Hoyos" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="225.0" layoutY="280.0" text="Collin Behunin">
+      <Label layoutX="270.0" layoutY="396.0" text="Collin Behunin" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="182.0" layoutY="233.0" text="Juan-Carlos Rodriguez">
+      <Label layoutX="227.0" layoutY="349.0" text="Juan-Carlos Rodriguez" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="209.0" layoutY="328.0" text="Richard Gonzalez">
+      <Label layoutX="254.0" layoutY="444.0" text="Richard Gonzalez" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="230.0" layoutY="373.0" text="Shejan Shuza">
+      <Label layoutX="275.0" layoutY="489.0" text="Shejan Shuza" textFill="WHITE">
          <font>
             <Font size="24.0" />
          </font>

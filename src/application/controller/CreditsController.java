@@ -15,10 +15,7 @@ public class CreditsController {
     private void switchToMainScene(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/main.fxml"));
         Parent root = loader.load();
-
-        // AdvancedController advancedController = loader.getController();
-
-        Scene zoneScene = new Scene(root, 600, 500);
+        Scene zoneScene = new Scene(root, 700, 600);
         Stage primaryStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         primaryStage.setScene(zoneScene);
         primaryStage.show();
