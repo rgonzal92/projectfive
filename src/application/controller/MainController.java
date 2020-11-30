@@ -34,6 +34,7 @@ public class MainController implements Initializable {
             else
                 for (String url : urlTextArea.getText().split("\n")) {
                     outputTextArea.clear();
+                    youtube_dl.OutputText=outputTextArea;
                     outputTextArea.appendText(youtube_dl.getRequest(url, config.getSaveDirectory()).replaceAll("\\r", "\n"));
                     System.out.println(url);
                 }

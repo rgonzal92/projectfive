@@ -1,6 +1,7 @@
 package application.controller;
 
 import application.model.Config;
+import com.sun.scenario.Settings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
@@ -31,7 +33,12 @@ public class AdvancedController implements Initializable {
     private CheckBox audioCheckBox, descriptionCheckBox, thumbnailsCheckBox, infoJsonCheckBox, overwritingCheckBox, playlistCheckBox;
     @FXML
     private TextField directoryTextField;
+    @FXML
+    private Label Settingssaved;
+    public AdvancedController(){
+        Settingssaved=new Label();
 
+    }
     private void generateOptions() {
         videoFormatDropDown.getItems().addAll("3gp", "flv", "webm", "mp4");
         videoFormatDropDown.setValue(config.getVideoFormat());
@@ -64,10 +71,19 @@ public class AdvancedController implements Initializable {
         if (config.getSaveDirectory().isEmpty() && directoryTextField.getText().isEmpty())
             config.setSaveDirectory(System.getProperty("user.home") + "\\Downloads");
         else if (directoryTextField.getText().isEmpty())
-            config.setSaveDirectory(config.getSaveDirectory());
+            //config.setSaveDirectory(config.getSaveDirectory());
+            config.setSaveDirectory("");
         else
             config.setSaveDirectory(directoryTextField.getText());
-        config.writeConfig();
+        try{
+            config.writeConfig();
+            Settingssaved.setVisible(true);
+        }catch(IOException e){
+            e.printStackTrace();
+
+        }
+
+
     }
 
     @FXML

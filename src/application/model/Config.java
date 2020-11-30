@@ -1,10 +1,6 @@
 package application.model;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.util.*;
 
 public class Config {
     private static Config instance;
@@ -26,7 +22,7 @@ public class Config {
             printWriter.printf("--format \"bestvideo[height<=%s][ext=%s]\"\n", getVideoResolution(), getVideoFormat());
         else
             printWriter.printf("--format \"bestvideo[height<=%s][ext=%s]+bestaudio[ext=%s]\"\n", getVideoResolution(), getVideoFormat(), getAudioFormat());
-        printWriter.println(getSaveDirectory());
+
         if (isAudioOnly()) printWriter.println("-x");
         if (isWriteDescription()) printWriter.println("--write-description");
         if (isWriteThumbnails()) printWriter.println("--write-thumbnail");
@@ -34,7 +30,7 @@ public class Config {
         if (isAcceptPlayLists()) printWriter.println("--yes-playlist");
         else printWriter.println("--no-playlist");
         if (isWriteInfoJsons()) printWriter.println("--write-info-json");
-
+        printWriter.println(getSaveDirectory());
         printWriter.close();
         fileWriter.close();
     }
@@ -43,9 +39,47 @@ public class Config {
         String[] videoFormats = {"3gp", "flv", "webm", "mp4"};
         String[] audioFormats = {"mp3", "wav", "acc", "m4a", "flac"};
         String[] videoResolutions = {"480", "720", "1080", "1440", "2160"};
-
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(getConfigPath()));
+        Scanner scan=new Scanner(getConfigPath());
+        String line;
+        if(scan.hasNextLine()){
+            line=scan.nextLine();
+            for (String format : videoFormats)
+                if (line.contains(format))
+                    setVideoFormat(format);
+            for (String format : audioFormats)
+                if (line.contains(format))
+                    setAudioFormat(format);
+                else
+                    setAudioFormat("Disabled");
+            for (String res : videoResolutions)
+                if (line.contains(res))
+                    setVideoResolution(res);
+            while(scan.hasNextLine()) {
+                line=scan.nextLine();
+                if (line.equals("-x"))
+                    setAudioOnly(true);
+                if (line.contains("write-description"))
+                    setWriteDescription(true);
+                if (line.contains("write-thumbnail"))
+                    setWriteThumbnails(true);
+                if (line.contains("no-overwrites"))
+                    setNoOverWriting(true);
+                if (line.contains("yes-playlist"))
+                    setAcceptPlayLists(true);
+                if (line.contains("no-playlist"))
+                    setAcceptPlayLists(false);
+                if (line.contains("write-info-json"))
+                    setWriteInfoJsons(true);
+                if(line.contains("/")||line.contains("\\")){
+                    setSaveDirectory(line);
+                }
+            }
+        }
+            /*BufferedReader bufferedReader = new BufferedReader(new FileReader(getConfigPath()));
         String line = bufferedReader.readLine();
+        if(line.length()>0){
+
+        }
         for (String format : videoFormats)
             if (line.contains(format))
                 setVideoFormat(format);
@@ -78,7 +112,10 @@ public class Config {
                 setWriteInfoJsons(true);
         }
         bufferedReader.close();
-    }
+         */
+
+        }
+
 
     private String getConfigPath() {
         return System.getProperty("user.dir") + "\\youtube-dl.conf";
@@ -164,7 +201,7 @@ public class Config {
 
     public String getSaveDirectory() {
         if (saveDirectory == null)
-            setSaveDirectory(System.getProperty("user.home") + "\\Downloads");
+            setSaveDirectory(System.getProperty("user.dir"));
         return saveDirectory;
     }
 
