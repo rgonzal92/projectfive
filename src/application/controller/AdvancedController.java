@@ -43,7 +43,7 @@ public class AdvancedController implements Initializable {
     private void generateOptions() {
         videoFormatDropDown.getItems().addAll("3gp", "flv", "webm", "mp4");
         videoFormatDropDown.setValue(config.getVideoFormat());
-        audioFormatDropDown.getItems().addAll("Disabled", "mp3", "wav", "acc", "m4a", "flac");
+        audioFormatDropDown.getItems().addAll("Auto", "mp3", "wav", "acc", "m4a", "flac");
         audioFormatDropDown.setValue(config.getAudioFormat());
         videoResolutionDropDown.getItems().addAll("480", "720", "1080", "1440", "2160");
         videoResolutionDropDown.setValue(config.getVideoResolution());

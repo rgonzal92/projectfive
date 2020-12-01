@@ -22,6 +22,7 @@ public class YTDL {
 
     public String getRequest(String videoLink, String saveDirectory) throws YoutubeDLException {
         YoutubeDLRequest request = new YoutubeDLRequest(videoLink, saveDirectory);
+        request.setOption("config-location", System.getProperty("user.dir"));
         YoutubeDLResponse response = getResponse(request);
         return response.getOut();
     }

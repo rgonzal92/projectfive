@@ -22,7 +22,7 @@ public class Config {
     public void writeConfig() throws IOException {
         FileWriter fileWriter = new FileWriter(getConfigPath());
         PrintWriter printWriter = new PrintWriter(fileWriter);
-        if (getAudioFormat().contains("Disabled"))
+        if (getAudioFormat().contains("Auto"))
             printWriter.printf("--format \"bestvideo[height<=%s][ext=%s]\"\n", getVideoResolution(), getVideoFormat());
         else
             printWriter.printf("--format \"bestvideo[height<=%s][ext=%s]+bestaudio[ext=%s]\"\n", getVideoResolution(), getVideoFormat(), getAudioFormat());
@@ -34,7 +34,7 @@ public class Config {
         if (isAcceptPlayLists()) printWriter.println("--yes-playlist");
         else printWriter.println("--no-playlist");
         if (isWriteInfoJsons()) printWriter.println("--write-info-json");
-        printWriter.println(getSaveDirectory());
+        // printWriter.println(getSaveDirectory());
         printWriter.close();
         fileWriter.close();
     }
@@ -59,7 +59,7 @@ public class Config {
                 if (line.contains(format))
                     setAudioFormat(format);
                 else
-                    setAudioFormat("Disabled");
+                    setAudioFormat("Auto");
             for (String res : videoResolutions)
                 if (line.contains(res))
                     setVideoResolution(res);
@@ -79,6 +79,7 @@ public class Config {
                     setAcceptPlayLists(false);
                 if (line.contains("write-info-json"))
                     setWriteInfoJsons(true);
+                // if (line.contains("sub"))
                 if (line.contains("/") || line.contains("\\"))
                     setSaveDirectory(line);
                 }
