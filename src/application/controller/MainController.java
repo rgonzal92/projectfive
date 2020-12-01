@@ -36,7 +36,7 @@ public class MainController implements Initializable {
                     outputTextArea.clear();
                     youtube_dl.OutputText=outputTextArea;
                     outputTextArea.appendText(youtube_dl.getRequest(url, config.getSaveDirectory()).replaceAll("\\r", "\n"));
-                    System.out.println(url);
+                    //System.out.println(url);
                 }
         } catch (YoutubeDLException e) {
             outputTextArea.setText(e.getMessage());

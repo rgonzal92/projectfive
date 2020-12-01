@@ -1,7 +1,6 @@
 package application.controller;
 
 import application.model.Config;
-import com.sun.scenario.Settings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,10 +34,12 @@ public class AdvancedController implements Initializable {
     private TextField directoryTextField;
     @FXML
     private Label Settingssaved;
-    public AdvancedController(){
-        Settingssaved=new Label();
+
+    public AdvancedController() {
+        Settingssaved = new Label();
 
     }
+
     private void generateOptions() {
         videoFormatDropDown.getItems().addAll("3gp", "flv", "webm", "mp4");
         videoFormatDropDown.setValue(config.getVideoFormat());
@@ -69,21 +70,18 @@ public class AdvancedController implements Initializable {
         config.setAcceptPlayLists(playlistCheckBox.isSelected());
         config.setNoOverWriting(overwritingCheckBox.isSelected());
         if (config.getSaveDirectory().isEmpty() && directoryTextField.getText().isEmpty())
-            config.setSaveDirectory(System.getProperty("user.home") + "\\Downloads");
+            config.setSaveDirectory(System.getProperty("user.bin"));
         else if (directoryTextField.getText().isEmpty())
-            //config.setSaveDirectory(config.getSaveDirectory());
-            config.setSaveDirectory("");
+            config.setSaveDirectory(config.getSaveDirectory());
+//            config.setSaveDirectory(""); -- causing a blank path after saving twice? please confirm
         else
             config.setSaveDirectory(directoryTextField.getText());
-        try{
+        try {
             config.writeConfig();
             Settingssaved.setVisible(true);
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
-
         }
-
-
     }
 
     @FXML
