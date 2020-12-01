@@ -17,16 +17,21 @@ public class Config {
     private boolean writeInfoJsons;
     private boolean noOverWriting;
     private boolean acceptPlayLists;
+    private boolean writeSubtitles;
+    private String outputTemplate;
     private String saveDirectory;
 
     public void writeConfig() throws IOException {
         FileWriter fileWriter = new FileWriter(getConfigPath());
         PrintWriter printWriter = new PrintWriter(fileWriter);
+
+        // format template
         if (getAudioFormat().contains("Auto"))
             printWriter.printf("--format \"bestvideo[height<=%s][ext=%s]\"\n", getVideoResolution(), getVideoFormat());
         else
             printWriter.printf("--format \"bestvideo[height<=%s][ext=%s]+bestaudio[ext=%s]\"\n", getVideoResolution(), getVideoFormat(), getAudioFormat());
 
+        // flags
         if (isAudioOnly()) printWriter.println("-x");
         if (isWriteDescription()) printWriter.println("--write-description");
         if (isWriteThumbnails()) printWriter.println("--write-thumbnail");
@@ -34,7 +39,17 @@ public class Config {
         if (isAcceptPlayLists()) printWriter.println("--yes-playlist");
         else printWriter.println("--no-playlist");
         if (isWriteInfoJsons()) printWriter.println("--write-info-json");
-        // printWriter.println(getSaveDirectory());
+        if (isWriteSubtitles()) printWriter.println("--write-sub");
+
+        // output template, set default as 'Title.ext' if null, else get config output
+        if (getOutputTemplate() == null) printWriter.println("-o \"%(title)s.%(ext)s\"");
+        else printWriter.printf("-o \"%s\"\n", getOutputTemplate());
+
+        // add # to ignore line read from config (else causes error)
+        // set config saved path
+        printWriter.printf("# %s\n", getSaveDirectory());
+
+        // close
         printWriter.close();
         fileWriter.close();
     }
@@ -45,9 +60,11 @@ public class Config {
         String[] audioFormats = {"mp3", "wav", "acc", "m4a", "flac"};
         String[] videoResolutions = {"480", "720", "1080", "1440", "2160"};
 
+        // if config does not exist, create
         File config = new File(getConfigPath());
-        config.createNewFile(); // if file does not exist
+        config.createNewFile();
 
+        // search config lines for matching string
         Scanner scan = new Scanner(config);
         String line;
         if (scan.hasNextLine()) {
@@ -79,12 +96,15 @@ public class Config {
                     setAcceptPlayLists(false);
                 if (line.contains("write-info-json"))
                     setWriteInfoJsons(true);
-                // if (line.contains("sub"))
-                if (line.contains("/") || line.contains("\\"))
-                    setSaveDirectory(line);
-                }
+                if (line.contains("write-sub"))
+                    setWriteSubtitles(true);
+                if (line.contains("-o "))
+                    setOutputTemplate(line.substring(3)); // cut off '-o' and whitespace
+                if (line.contains("#"))
+                    setSaveDirectory(line.substring(2)); // cut off # and whitespace
             }
         }
+    }
 
     private String getConfigPath() {
         return System.getProperty("user.dir") + "/youtube-dl.conf";
@@ -176,5 +196,21 @@ public class Config {
 
     public void setSaveDirectory(String saveDirectory) {
         this.saveDirectory = saveDirectory;
+    }
+
+    public boolean isWriteSubtitles() {
+        return writeSubtitles;
+    }
+
+    public void setWriteSubtitles(boolean writeSubtitles) {
+        this.writeSubtitles = writeSubtitles;
+    }
+
+    public String getOutputTemplate() {
+        return outputTemplate;
+    }
+
+    public void setOutputTemplate(String outputTemplate) {
+        this.outputTemplate = outputTemplate;
     }
 }

@@ -34,9 +34,8 @@ public class MainController implements Initializable {
             else
                 for (String url : urlTextArea.getText().split("\n")) {
                     outputTextArea.clear();
-                    youtube_dl.OutputText=outputTextArea;
-                    outputTextArea.appendText(youtube_dl.getRequest(url, config.getSaveDirectory()).replaceAll("\\r", "\n"));
-                    //System.out.println(url);
+                    youtube_dl.OutputText = outputTextArea;
+                    outputTextArea.appendText(youtube_dl.getRequest(url, config.getSaveDirectory()).replaceAll("\\r", "\n")); // format error?
                 }
         } catch (YoutubeDLException e) {
             outputTextArea.setText(e.getMessage());
@@ -79,6 +78,10 @@ public class MainController implements Initializable {
         youtube_dl.setExecPath();
         try {
             config.loadConfig();
+            // fixes nullpointerexception if config
+            // doesn't contain output template string
+            if (config.getOutputTemplate() == null)
+                config.setOutputTemplate("%(title)s.%(ext)s");
         } catch (IOException ignored) {
             ;
         }
