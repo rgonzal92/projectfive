@@ -6,9 +6,10 @@ import com.sapher.youtubedl.YoutubeDLRequest;
 import com.sapher.youtubedl.YoutubeDLResponse;
 import javafx.scene.control.TextArea;
 
-public class YTDL {
+public class YTDL{
     private static YTDL instance;
     public TextArea OutputText;
+    private Thread thread;
 
     public static YTDL getInstance() {
         if (instance == null)
@@ -20,18 +21,27 @@ public class YTDL {
         YoutubeDL.setExecutablePath(System.getProperty("user.dir") + "/lib/youtube-dl.exe");
     }
 
-    public String getRequest(String videoLink, String saveDirectory) throws YoutubeDLException {
+    public void getRequest(String videoLink, String saveDirectory) {
         YoutubeDLRequest request = new YoutubeDLRequest(videoLink, saveDirectory);
         request.setOption("config-location", System.getProperty("user.dir"));
-        YoutubeDLResponse response = getResponse(request);
-        return response.getOut();
+        //YoutubeDLResponse response = getResponse(request);
+        //return response.getOut();
+        getResponse(request);
     }
 
-    public YoutubeDLResponse getResponse(YoutubeDLRequest request) throws YoutubeDLException {
-        return YoutubeDL.execute(request, (progress, etaInSeconds) -> {
-            String s = progress + "%" + "," + etaInSeconds + "s";
-            //System.out.println(s);
-            OutputText.appendText(s + "\n");
-        });
+    public void getResponse(YoutubeDLRequest request) {
+        synchronized (this){
+            if(thread!=null&&thread.isAlive()){
+                //System.err.println("Bruh moment");
+                System.err.println("Already downloading another video");
+                OutputText.appendText("Already downloading another video");
+                System.err.println(thread.toString());
+                return;
+            }
+            YouTubeDLExecute execute = new YouTubeDLExecute(request,OutputText);
+            thread = new Thread(execute);
+            thread.start();
+        }
+
     }
 }

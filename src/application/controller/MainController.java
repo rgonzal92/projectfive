@@ -28,18 +28,19 @@ public class MainController implements Initializable {
 
     @FXML
     private void download() {
-        try {
+        //try {
             if (urlTextArea.getText().isEmpty())
                 outputTextArea.setText("Must provide at least one link.");
             else
                 for (String url : urlTextArea.getText().split("\n")) {
                     outputTextArea.clear();
                     youtube_dl.OutputText = outputTextArea;
-                    outputTextArea.appendText(youtube_dl.getRequest(url, config.getSaveDirectory()).replaceAll("\\r", "\n")); // format error?
+                    //outputTextArea.appendText(youtube_dl.getRequest(url, config.getSaveDirectory()).replaceAll("\\r", "\n")); // format error?
+                    youtube_dl.getRequest(url, config.getSaveDirectory())/*.replaceAll("\\r", "\n")*/;
                 }
-        } catch (YoutubeDLException e) {
+        /*} catch (YoutubeDLException e) {
             outputTextArea.setText(e.getMessage());
-        }
+        }*/
     }
 
     @FXML
@@ -83,7 +84,7 @@ public class MainController implements Initializable {
             if (config.getOutputTemplate() == null)
                 config.setOutputTemplate("%(title)s.%(ext)s");
         } catch (IOException ignored) {
-            ;
+            System.err.println("IOException thrown in MainController.java");
         }
     }
 }
