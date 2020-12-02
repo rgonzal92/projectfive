@@ -23,16 +23,15 @@ This project requires the following:
 * Step 6: profit
 
 ## Screenshots
-![Main Screen](./img/YTDL.png){:height="50%" width="50%"}
-![Advanced Screen](./img/YTDL_Advanced.png){:height="50%" width="50%"}
-
+![Main Screen](./img/YTDL.png)
+![Advanced Screen](./img/YTDL_Advanced.png)
 ## Credits
 > Without these programs, this project would've not been possibled!
 * [YouTube-DL](https://github.com/ytdl-org/youtube-dl) - The core of the project!
 * [YTDL-Java](https://github.com/sapher/youtubedl-java) - The wrapper that interacts with the YouTube-DL Binary!
 
 ## Team
-![Team Logo](./img/obj_5_logo.png){:height="50%" width="50%"}
+![Team Logo](./img/obj_5_logo.png)
 **The Object Five Team:**
 * Richard Gonzalez
 * Shejan Shuza
