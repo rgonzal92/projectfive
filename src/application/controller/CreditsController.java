@@ -10,7 +10,22 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Handles interactions with the credits.fxml file.
+ * 
+ * @author Richard Gonzalez
+ * @author Shejan Shuza
+ * @author Juan-Carlos Rodriguez
+ * @author Collin Behunin
+ * @author Jacob De Hoyos
+ */
 public class CreditsController {
+    /**
+	 * Switches to the main.fxml file when the Home button is pressed.
+	 * 
+     * @param actionEvent	an ActionEvent object (button press).
+     * @throws IOException	if the file cannot be found.
+	 */
     @FXML
     private void switchToMainScene(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/main.fxml"));
