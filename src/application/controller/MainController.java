@@ -17,6 +17,16 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Handles interactions with the main.fxml file.
+ * Variables: youtube_dl(YTDL), config(Config), urlTextArea(TextArea), outputTextArea(TextArea).
+ * 
+ * @author Richard Gonzalez
+ * @author Shejan Shuza
+ * @author Juan-Carlos Rodriguez
+ * @author Collin Behunin
+ * @author Jacob De Hoyos
+ */
 public class MainController implements Initializable {
     private final YTDL youtube_dl = YTDL.getInstance();
     private final Config config = Config.getInstance();
@@ -40,23 +50,32 @@ public class MainController implements Initializable {
                 }
 
     }*/
-@FXML
-private void download() {
-    //try {
-    if (urlTextArea.getText().isEmpty())
-        outputTextArea.setText("Must provide at least one link.");
-    else
-        youtube_dl.OutputText = outputTextArea;
-        youtube_dl.getRequest(urlTextArea.getText().split(("\n")), config.getSaveDirectory());
-        /*for (String url : urlTextArea.getText().split("\n")) {
-            outputTextArea.clear();
+
+    /**
+     * Initiates a download when the Download button is pressed.
+     */
+    @FXML
+    private void download() {
+        //try {
+        if (urlTextArea.getText().isEmpty())
+            outputTextArea.setText("Must provide at least one link.");
+        else
             youtube_dl.OutputText = outputTextArea;
-            //outputTextArea.appendText(youtube_dl.getRequest(url, config.getSaveDirectory()).replaceAll("\\r", "\n")); // format error?
-            youtube_dl.getRequest(url, config.getSaveDirectory());
-        }*/
+            youtube_dl.getRequest(urlTextArea.getText().split(("\n")), config.getSaveDirectory());
+            /*for (String url : urlTextArea.getText().split("\n")) {
+                outputTextArea.clear();
+                youtube_dl.OutputText = outputTextArea;
+                //outputTextArea.appendText(youtube_dl.getRequest(url, config.getSaveDirectory()).replaceAll("\\r", "\n")); // format error?
+                youtube_dl.getRequest(url, config.getSaveDirectory());
+            }*/
+    }
 
-}
-
+    /**
+	 * Switches to the credits.fxml file when the Home button is pressed.
+	 * 
+     * @param actionEvent	an ActionEvent object (button press).
+     * @throws IOException	if the file cannot be found.
+	 */
     @FXML
     private void switchToCreditsScene(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader();
@@ -64,13 +83,27 @@ private void download() {
         loadScene(actionEvent, loader, scene);
     }
 
+    /**
+	 * Switches to the advanced.fxml file when the Home button is pressed.
+	 * 
+     * @param actionEvent	an ActionEvent object (button press).
+     * @throws IOException	if the file cannot be found.
+	 */
     @FXML
     private void switchToAdvancedScene(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         String scene = "../view/advanced.fxml";
         loadScene(actionEvent, loader, scene);
     }
-
+    
+    /**
+     * Loads the specified fxml file onto the stage.
+     * 
+     * @param actionEvent	an ActionEvent object (button press).	
+     * @param loader		an FXMLLoader object.		
+     * @param scene			a String representing the fxml file to be loaded.
+     * @throws IOException	if the file could not be found.
+     */
     private void loadScene(ActionEvent actionEvent, FXMLLoader loader, String scene) throws IOException {
         loader.setLocation(getClass().getResource(scene));
         Parent root = loader.load();
