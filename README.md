@@ -23,8 +23,8 @@ This project requires the following:
 * Step 6: profit
 
 ## Screenshots
-![Main Screen](./img/YTDL.png =50x50))
-![Advanced Screen](./img/YTDL_Advanced.png =50x50)
+![Main Screen](./img/YTDL.png | =50x50))
+![Advanced Screen](./img/YTDL_Advanced.png | =50x50)
 
 ## Credits
 > Without these programs, this project would've not been possibled!
@@ -32,7 +32,7 @@ This project requires the following:
 * [YTDL-Java](https://github.com/sapher/youtubedl-java) - The wrapper that interacts with the YouTube-DL Binary!
 
 ## Team
-![Team Logo](./img/obj_5_logo.png =50x50)
+![Team Logo](./img/obj_5_logo.png | =50x50)
 **The Object Five Team:**
 * Richard Gonzalez
 * Shejan Shuza
