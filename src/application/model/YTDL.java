@@ -6,21 +6,45 @@ import com.sapher.youtubedl.YoutubeDLRequest;
 import com.sapher.youtubedl.YoutubeDLResponse;
 import javafx.scene.control.TextArea;
 
+/**
+ * Contains variables and methods for handling a single YoutubeDL request.
+ * Variables:	instance(YTDL), OutputText(TextArea), thread(Thread)
+ * 
+ * @author Richard Gonzalez
+ * @author Shejan Shuza
+ * @author Juan-Carlos Rodriguez
+ * @author Collin Behunin
+ * @author Jacob De Hoyos
+ */
 public class YTDL{
     private static YTDL instance;
     public TextArea OutputText;
     private Thread thread;
 
+    /**
+     * Returns a YTDL object, and creates one if it doesn't exist.
+     * 
+     * @return		a YTDL object.
+     */
     public static YTDL getInstance() {
         if (instance == null)
             instance = new YTDL();
         return instance;
     }
 
+    /**
+     * Sets the path for youtube-dl.exe.
+     */
     public void setExecPath() {
         YoutubeDL.setExecutablePath(System.getProperty("user.dir") + "/lib/youtube-dl.exe");
     }
 
+    /**
+     * Creates and sets options to execute the download.
+     * 
+     * @param videoLink			an Array of Strings to be downloaded.
+     * @param saveDirectory		the target directory path for download.
+     */
     public void getRequest(String[] videoLink, String saveDirectory) {
         YoutubeDLRequest[] requests = new YoutubeDLRequest[videoLink.length];
         for(int n=0;n<videoLink.length;n++){
@@ -30,8 +54,13 @@ public class YTDL{
         RunExecute(requests);
         //YoutubeDLResponse response = getResponse(request);
         //return response.getOut();
-
     }
+    
+    /**
+     * Takes the array of download requests and executes the download on a separate thread while printing feedback to the user.
+     * 
+     * @param requests		an array of download requests.
+     */
     public void RunExecute(YoutubeDLRequest[] requests){
         synchronized (this){
             if(thread!=null&&thread.isAlive()){
