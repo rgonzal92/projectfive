@@ -19,6 +19,19 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+/**
+ * Handles interacitons with the advanced.fxml file.
+ * Variables: 	anchorPane(AnchorPane), videoFormatDropDown(ComboBox<String>), audioFormatDropDown(ComboBox<String>), 
+ * 				videoResolutionDropDown(ComboBox<String>), outputTemplateDropDown(ComboBox<String>), audioCheckBox(CheckBox), 
+ * 				descriptionCheckBox(CheckBox), thumbnailsCheckBox(CheckBox), infoJsonCheckBox(CheckBox), overwritingCheckBox(CheckBox), 
+ * 				playlistCheckBox(CheckBox), directoryTextField(TextField), yesRadio(RadioButton), noRadio(RadioButton)
+ * 
+ * @author Richard Gonzalez
+ * @author Shejan Shuza
+ * @author Juan-Carlos Rodriguez
+ * @author Collin Behunin
+ * @author Jacob De Hoyos
+ */
 public class AdvancedController implements Initializable {
     private final Config config = Config.getInstance();
 
@@ -35,11 +48,16 @@ public class AdvancedController implements Initializable {
     @FXML
     private RadioButton yesRadio, noRadio;
 
+    /**
+     * Constructor: initializes a new Label called Settingssaved.
+     */
     public AdvancedController() {
         Settingssaved = new Label();
-
     }
 
+    /**
+     * Populates the various fields with information as well as reads previously selected info from the config file.
+     */
     private void generateOptions() {
         // if config settings match hashmap key, set value to outputTemplateDropDown
         HashMap<String, String> outputTextFormat = new HashMap<String, String>() {{
@@ -78,6 +96,11 @@ public class AdvancedController implements Initializable {
         directoryTextField.setPromptText(config.getSaveDirectory());
     }
 
+    /**
+     * Saves all selected information from the Advanced screen to the config file when Save button is pressed.
+     * 
+     * @throws IOException	If the config file cannot be found.
+     */
     @FXML
     private void save() throws IOException {
         // save all values (if applicable)
@@ -129,6 +152,9 @@ public class AdvancedController implements Initializable {
         }
     }
 
+    /**
+     * Opens a directory browser when the Browse button is pressed.
+     */
     @FXML
     private void browseDirectory() {
         final DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -138,6 +164,12 @@ public class AdvancedController implements Initializable {
             directoryTextField.setText(file.getAbsolutePath());
     }
 
+    /**
+     * Switches to the main.fxml file when the Home button is pressed.
+     * 
+     * @param actionEvent	an ActionEvent object (button press).
+     * @throws IOException	if the file cannot be found.
+     */
     @FXML
     private void switchToMainScene(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/main.fxml"));
