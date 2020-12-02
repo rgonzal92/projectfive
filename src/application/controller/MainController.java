@@ -25,7 +25,7 @@ public class MainController implements Initializable {
     private TextArea urlTextArea;
     @FXML
     private TextArea outputTextArea;
-
+/*
     @FXML
     private void download() {
         //try {
@@ -36,12 +36,26 @@ public class MainController implements Initializable {
                     outputTextArea.clear();
                     youtube_dl.OutputText = outputTextArea;
                     //outputTextArea.appendText(youtube_dl.getRequest(url, config.getSaveDirectory()).replaceAll("\\r", "\n")); // format error?
-                    youtube_dl.getRequest(url, config.getSaveDirectory())/*.replaceAll("\\r", "\n")*/;
+                    youtube_dl.getRequest(url, config.getSaveDirectory());
                 }
-        /*} catch (YoutubeDLException e) {
-            outputTextArea.setText(e.getMessage());
+
+    }*/
+@FXML
+private void download() {
+    //try {
+    if (urlTextArea.getText().isEmpty())
+        outputTextArea.setText("Must provide at least one link.");
+    else
+        youtube_dl.OutputText = outputTextArea;
+        youtube_dl.getRequest(urlTextArea.getText().split(("\n")), config.getSaveDirectory());
+        /*for (String url : urlTextArea.getText().split("\n")) {
+            outputTextArea.clear();
+            youtube_dl.OutputText = outputTextArea;
+            //outputTextArea.appendText(youtube_dl.getRequest(url, config.getSaveDirectory()).replaceAll("\\r", "\n")); // format error?
+            youtube_dl.getRequest(url, config.getSaveDirectory());
         }*/
-    }
+
+}
 
     @FXML
     private void switchToCreditsScene(ActionEvent actionEvent) throws IOException {

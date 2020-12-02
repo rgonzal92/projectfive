@@ -21,7 +21,31 @@ public class YTDL{
         YoutubeDL.setExecutablePath(System.getProperty("user.dir") + "/lib/youtube-dl.exe");
     }
 
-    public void getRequest(String videoLink, String saveDirectory) {
+    public void getRequest(String[] videoLink, String saveDirectory) {
+        YoutubeDLRequest[] requests = new YoutubeDLRequest[videoLink.length];
+        for(int n=0;n<videoLink.length;n++){
+            requests[n] = new YoutubeDLRequest(videoLink[n], saveDirectory);
+            requests[n].setOption("config-location", System.getProperty("user.dir"));
+        }
+        RunExecute(requests);
+        //YoutubeDLResponse response = getResponse(request);
+        //return response.getOut();
+
+    }
+    public void RunExecute(YoutubeDLRequest[] requests){
+        synchronized (this){
+            if(thread!=null&&thread.isAlive()){
+                System.err.println("Already downloading other videos");
+                OutputText.appendText("Already downloading other videos");
+                System.err.println(thread.toString());
+                return;
+            }
+            YouTubeDLExecute execute = new YouTubeDLExecute(requests,OutputText);
+            thread = new Thread(execute);
+            thread.start();
+        }
+    }
+    /*public void getRequest(String videoLink, String saveDirectory) {
         YoutubeDLRequest request = new YoutubeDLRequest(videoLink, saveDirectory);
         request.setOption("config-location", System.getProperty("user.dir"));
         //YoutubeDLResponse response = getResponse(request);
@@ -43,5 +67,8 @@ public class YTDL{
             thread.start();
         }
 
+
     }
+    */
+
 }
