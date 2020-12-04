@@ -139,7 +139,6 @@ public class AdvancedController implements Initializable {
             config.setSaveDirectory(System.getProperty("user.bin"));
         else if (directoryTextField.getText().isEmpty())
             config.setSaveDirectory(config.getSaveDirectory());
-            // config.setSaveDirectory(""); -- causing a blank path after saving twice? please confirm
         else
             config.setSaveDirectory(directoryTextField.getText());
 
@@ -184,9 +183,13 @@ public class AdvancedController implements Initializable {
      * Called to initialize a controller after its root element has been
      * completely processed.
      *
-     * @param location  The location used to resolve relative paths for the root object, or
-     *                  <tt>null</tt> if the location is not known.
-     * @param resources The resources used to localize the root object, or <tt>null</tt> if
+     * @param location
+     * The location used to resolve relative paths for the root object, or
+     * <tt>null</tt> if the location is not known.
+     *
+     * @param resources
+     * The resources used to localize the root object, or <tt>null</tt> if
+     * the root object was not localized.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {

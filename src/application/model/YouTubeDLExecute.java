@@ -1,9 +1,10 @@
 package application.model;
 
-import com.sapher.youtubedl.*;
-import javafx.scene.control.*;
-
-import javax.xml.soap.Text;
+import com.sapher.youtubedl.YoutubeDL;
+import com.sapher.youtubedl.YoutubeDLException;
+import com.sapher.youtubedl.YoutubeDLRequest;
+import com.sapher.youtubedl.YoutubeDLResponse;
+import javafx.scene.control.TextArea;
 
 /**
  * Contains variables and methods for handling the execution in the youtub-dl.exe
@@ -16,14 +17,9 @@ import javax.xml.soap.Text;
  * @author Jacob De Hoyos
  */
 public class YouTubeDLExecute implements Runnable{
-    //public YoutubeDLRequest request;
     public YoutubeDLRequest[] requests;
     public TextArea OutputText;
     public YoutubeDLResponse response;
-    /*public YouTubeDLExecute(YoutubeDLRequest ytreq, TextArea texta){
-        setOutputText(texta);
-        setRequest(ytreq);
-    }*/
     
     /**
      * Takes two variables of YoutubeDLExecute information.
@@ -71,30 +67,6 @@ public class YouTubeDLExecute implements Runnable{
     public void setRequests(YoutubeDLRequest[] request) {
         this.requests = request;
     }
-    /*public YoutubeDLRequest getRequest() {
-        return request;
-    }
-
-    public void setRequest(YoutubeDLRequest request) {
-        this.request = request;
-    }*/
-
-   /* @Override
-    public void run() {
-        try{
-            response=YoutubeDL.execute(request, (progress, etaInSeconds) -> {
-                String s = progress + "%" + "," + etaInSeconds + "s";
-                System.out.println(s);
-                OutputText.appendText(s + "\n");
-            });
-            OutputText.appendText(response.getOut().replaceAll("\\r", "\n"));
-        }catch(YoutubeDLException e){
-            e.printStackTrace();
-            OutputText.appendText(e.toString());
-        }
-
-       //notify();
-    }*/
     
     /**
      * Executes the youtube-dl.exe with the array of YoutubeDLRequests.
@@ -117,18 +89,5 @@ public class YouTubeDLExecute implements Runnable{
                 OutputText.appendText(e.toString() + "\n");
             }
         }
-        /*try{
-            response=YoutubeDL.execute(request, (progress, etaInSeconds) -> {
-                String s = progress + "%" + "," + etaInSeconds + "s";
-                System.out.println(s);
-                OutputText.appendText(s + "\n");
-            });
-            OutputText.appendText(response.getOut().replaceAll("\\r", "\n"));
-        }catch(YoutubeDLException e){
-            e.printStackTrace();
-            OutputText.appendText(e.toString());
-        }*/
-        
-        //notify();
     }
 }

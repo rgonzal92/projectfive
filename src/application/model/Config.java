@@ -44,7 +44,7 @@ public class Config {
 
         // format template
         if (getAudioFormat().contains("Auto"))
-            printWriter.printf("--format \"bestvideo[height<=%s][ext=%s]\"\n", getVideoResolution(), getVideoFormat());
+            printWriter.printf("--format \"bestvideo[height<=%s][ext=%s]+bestaudio\"\n", getVideoResolution(), getVideoFormat());
         else
             printWriter.printf("--format \"bestvideo[height<=%s][ext=%s]+bestaudio[ext=%s]\"\n", getVideoResolution(), getVideoFormat(), getAudioFormat());
 
@@ -268,7 +268,7 @@ public class Config {
     /**
      * Sets a boolean into the writeInfoJsons variable.
      *  
-     * @param writeInofJsons	The boolean for the writeInfoJsons variable.
+     * @param writeInfoJsons	The boolean for the writeInfoJsons variable.
      */
     public void setWriteInfoJsons(boolean writeInfoJsons) {
         this.writeInfoJsons = writeInfoJsons;
